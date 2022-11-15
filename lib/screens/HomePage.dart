@@ -65,7 +65,19 @@ class _HomeState extends State<Home> {
               ),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.83,
+                  height: MediaQuery.of(context).size.height * 0.11,
+                  width: MediaQuery.of(context).size.width,
+                  child: ListView.builder(itemCount: homeData.HomeList.length,
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      return RoundedImage(
+                              src: homeData.HomeList[index]["image"],
+                              text: homeData.HomeList[index]["text"]);
+                    }
+                    )),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.71,
               width: MediaQuery.of(context).size.width,
               child: GridView.builder(
                 gridDelegate:
@@ -155,4 +167,36 @@ Widget HomeCard(context, home) {
           ),
         )),
   );
+}
+
+Widget RoundedImage({src, text}) {
+  return ClipRRect(
+      borderRadius: BorderRadius.circular(28),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 10),
+        child: Container(
+          alignment: Alignment.center,
+          height: 60,
+          width: 120,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: Image.network(
+                "$src",
+                height: 50,
+                width: 120,
+                fit: BoxFit.cover,
+              ).image),
+              borderRadius: BorderRadius.all(Radius.circular(28))),
+          child: Container(
+              height: 77.5,
+              width: 116.2,
+              alignment: Alignment.center,
+              color: Color.fromARGB(55, 8, 8, 8),
+              child: Text(
+                "$text",
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              )),
+        ),
+      ));
 }
