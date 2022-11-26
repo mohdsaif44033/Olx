@@ -2,7 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:olx/controllers/homeData.dart';
+import 'package:olx/screens/accountPage.dart';
 import 'package:olx/screens/chatPage.dart';
+import 'package:olx/screens/viewProfile.dart';
 
 class AdPage extends StatefulWidget {
   const AdPage({super.key, required this.home});
@@ -27,51 +29,71 @@ class _AdPageState extends State<AdPage> {
           ],
         ),
         bottomNavigationBar: SizedBox(
-          height: 60,
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [TextButton(
+          height: 55,
+          child: Padding(
+            padding: const EdgeInsets.only(
+                top: 5.0, bottom: 3.0, left: 5.0, right: 5.0),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  TextButton(
                     style: TextButton.styleFrom(
-                      fixedSize: Size.fromWidth(MediaQuery.of(context).size.width*0.46),
+                      fixedSize: Size.fromWidth(
+                          MediaQuery.of(context).size.width * 0.45),
                       foregroundColor: Colors.white,
-                      backgroundColor: const Color.fromARGB(255, 2, 95, 50),
-                      padding: const EdgeInsets.all(16.0),
+                      backgroundColor: Colors.cyan,
+                      padding: const EdgeInsets.all(10.0),
                       textStyle: const TextStyle(fontSize: 22),
                     ),
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const ChatPage()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ChatPage()));
                     },
-                    child: Row(mainAxisAlignment: MainAxisAlignment.center,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       // ignore: prefer_const_literals_to_create_immutables
-                      children: [const Icon(Icons.chat),
-                        const Text(' Chat'),
+                      children: [
+                        const Icon(Icons.chat),
+                        const Text(
+                          ' Chat',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w600),
+                        ),
                       ],
                     ),
                   ),
                   TextButton(
                     style: TextButton.styleFrom(
-                      fixedSize: Size.fromWidth(MediaQuery.of(context).size.width*0.46),
-                      
+                      fixedSize: Size.fromWidth(
+                          MediaQuery.of(context).size.width * 0.46),
                       foregroundColor: Colors.white,
-                      backgroundColor: const Color.fromARGB(255, 2, 95, 50),
-                      padding: const EdgeInsets.all(16.0),
-                      textStyle: const TextStyle(fontSize: 22),
+                      backgroundColor: Colors.cyan,
+                      padding: const EdgeInsets.all(10.0),
+                      textStyle: const TextStyle(
+                          fontSize: 15, fontWeight: FontWeight.w600),
                     ),
                     onPressed: () {
-                       Navigator.push(context, MaterialPageRoute(builder: (context) => const ChatPage()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ChatPage()));
                     },
-                    child: Row(mainAxisAlignment: MainAxisAlignment.center,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       // ignore: prefer_const_literals_to_create_immutables
                       children: [
                         const Icon(Icons.currency_rupee_sharp),
-                        const Text(' Make Offer'),
+                        const Text(' Make Offer',
+                            style: TextStyle(fontSize: 18)),
                       ],
                     ),
                   ),
-              // TextButton(style: ButtonStyle(,backgroundColor: MaterialStateProperty.all(Colors.amber)),onPressed: (){}, child: Row(children: [Icon(Icons.message_rounded),Text("Chat")],))
-            ]),
-        ),
+                  // TextButton(style: ButtonStyle(,backgroundColor: MaterialStateProperty.all(Colors.amber)),onPressed: (){}, child: Row(children: [Icon(Icons.message_rounded),Text("Chat")],))
+                ]),
+          ),
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -96,7 +118,7 @@ class _AdPageState extends State<AdPage> {
                   Padding(
                     padding: const EdgeInsets.only(top: 2.0),
                     child: SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.11,
+                      height: MediaQuery.of(context).size.height * 0.14,
                       width: MediaQuery.of(context).size.width,
                       child: Card(
                         elevation: 2.5,
@@ -126,14 +148,15 @@ class _AdPageState extends State<AdPage> {
                             const Padding(
                               padding: EdgeInsets.only(left: 6.0, right: 6.0),
                               child: Text(
-                                "Mi 4gb ram 32 GB",overflow: TextOverflow.ellipsis,
+                                "Mi 4gb ram 32 GB",
+                                overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.bold),
                               ),
                             ),
                             Padding(
                               padding: const EdgeInsets.only(
-                                  left: 3.40, right: 10.0,top: 8),
+                                  left: 3.40, right: 10.0, top: 8),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -144,7 +167,8 @@ class _AdPageState extends State<AdPage> {
                                         Icons.location_on,
                                         size: 18.0,
                                       ),
-                                      Text("TUGHLAKABAD, DELHI",overflow: TextOverflow.ellipsis,
+                                      Text("TUGHLAKABAD, DELHI",
+                                          overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
                                               fontSize: 11,
                                               fontWeight: FontWeight.bold)),
@@ -191,7 +215,8 @@ class _AdPageState extends State<AdPage> {
                                   Padding(
                                     padding: EdgeInsets.only(left: 100.0),
                                     child: Text("Mi",
-                                        textAlign: TextAlign.left,overflow: TextOverflow.ellipsis,
+                                        textAlign: TextAlign.left,
+                                        overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
                                             fontSize: 14,
                                             fontWeight: FontWeight.bold)),
@@ -220,18 +245,20 @@ class _AdPageState extends State<AdPage> {
                               padding: EdgeInsets.only(
                                   left: 6.0, right: 6.0, bottom: 15.0),
                               child: Text(
-                                "Description",overflow: TextOverflow.ellipsis,
+                                "Description",
+                                overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                     fontSize: 17.5,
-                                    fontWeight: FontWeight.bold),
+                                    fontWeight: FontWeight.w600),
                               ),
                             ),
                             const Padding(
                               padding: EdgeInsets.only(left: 6.0, right: 6.0),
                               child: Text(
-                                "Mi 4gb ram 32 GB",overflow: TextOverflow.ellipsis,
+                                "Mi 4gb ram 32 GB",
+                                overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.w600),
+                                    fontSize: 15, fontWeight: FontWeight.w500),
                               ),
                             ),
                           ],
@@ -260,7 +287,7 @@ class _AdPageState extends State<AdPage> {
                                   width:
                                       MediaQuery.of(context).size.width - 110.0,
                                   child: Padding(
-                                    padding: const EdgeInsets.only(left: 10.0),
+                                    padding: const EdgeInsets.only(left: 10.0,top: 3.0),
                                     child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
@@ -268,11 +295,12 @@ class _AdPageState extends State<AdPage> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         const Padding(
-                                          padding: EdgeInsets.only(left: 8.0),
+                                          padding: EdgeInsets.only(left: 8.0,top: 2.0),
                                           child: Text(
-                                            "SAIF",overflow: TextOverflow.ellipsis,
+                                            "SAIF",
+                                            overflow: TextOverflow.ellipsis,
                                             style: TextStyle(
-                                                fontSize: 19,
+                                                fontSize: 17,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                         ),
@@ -282,11 +310,13 @@ class _AdPageState extends State<AdPage> {
                                           // ignore: prefer_const_literals_to_create_immutables
                                           children: [
                                             const Padding(
-                                              padding: EdgeInsets.only(left: 8.0),
+                                              padding: EdgeInsets.only(
+                                                  left: 8.0,),
                                               child: Text(
-                                                "Member Since 15:35",overflow: TextOverflow.ellipsis,
+                                                "Member Since 15:35",
+                                                overflow: TextOverflow.ellipsis,
                                                 style: TextStyle(
-                                                    fontSize: 13,
+                                                    fontSize: 12.8,
                                                     fontWeight: FontWeight.w600,
                                                     color: Colors.grey),
                                               ),
@@ -294,18 +324,26 @@ class _AdPageState extends State<AdPage> {
                                             const Icon(
                                                 Icons
                                                     .arrow_forward_ios_outlined,
-                                                size: 13)
+                                                size: 14)
                                           ],
                                         ),
                                         // ignore: prefer_const_constructors
                                         TextButton(
-                                    style: TextButton.styleFrom(
-                                      textStyle: const TextStyle(
-                                          fontSize: 14, color: Colors.blue,fontWeight: FontWeight.bold),
-                                    ),
-                                    onPressed: () {},
-                                    child: const Text('SEE PROFILE'),
-                                  ),
+                                          style: TextButton.styleFrom(
+                                            textStyle: const TextStyle(
+                                                fontSize: 13,
+                                                color: Colors.cyan,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          onPressed: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        ViewProfile()));
+                                          },
+                                          child: const Text('SEE PROFILE'),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -347,7 +385,8 @@ class _AdPageState extends State<AdPage> {
                       child: Card(
                           elevation: 2.5,
                           child: Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.only(
+                                  left: 10.0, right: 10.0),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -356,7 +395,7 @@ class _AdPageState extends State<AdPage> {
                                     "AD ID : 1800151556",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 16.8),
+                                        fontSize: 15),
                                   ),
                                   TextButton(
                                     style: TextButton.styleFrom(

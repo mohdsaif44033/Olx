@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:olx/screens/accountPage.dart';
 import 'package:olx/screens/adPage.dart';
 import 'package:olx/screens/chatPage.dart';
+import 'package:olx/screens/loginPage.dart';
+import 'package:olx/screens/myAdsPage.dart';
+import 'package:olx/screens/viewProfile.dart';
 
 import 'screens/HomePage.dart';
 
 void main(){
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -14,9 +18,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      // theme: ThemeData(fontFamily: GoogleFonts.lato().fontFamily),
       debugShowCheckedModeBanner: false,
       // theme: ThemeData(primarySwatch: Colors.green),
-      home: Home(),
+      home: LoginPage(),
       
     );
   }

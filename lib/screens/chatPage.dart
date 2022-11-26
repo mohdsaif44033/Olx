@@ -35,7 +35,7 @@ class _ChatPageState extends State<ChatPage> {
               Padding(
                 padding: const EdgeInsets.only(left: 6.0),
                 child: const SizedBox(
-                    width: 280,
+                    width: 120,
                     child: Text(
                       "   Mohd Saif",
                       style: TextStyle(
@@ -82,7 +82,8 @@ class _ChatPageState extends State<ChatPage> {
                   borderSide: BorderSide(color: Colors.grey, width: 2.0),
                   borderRadius: BorderRadius.all(Radius.circular(12))),
               prefixIcon: Icon(Icons.attachment_rounded,color: Colors.black,),
-              suffixIcon: Icon(Icons.mic_outlined,color: Colors.black,)
+              suffixIcon: Icon(Icons.mic_outlined,color: Colors.black,),
+              hintText: "Type your message here"
             ),
           ),
         ),

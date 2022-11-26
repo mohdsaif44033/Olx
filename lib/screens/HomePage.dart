@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:olx/controllers/homeData.dart';
+import 'package:olx/screens/accountPage.dart';
 import 'package:olx/screens/adPage.dart';
+import 'package:olx/screens/chatPage.dart';
+import 'package:olx/screens/myAdsPage.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -10,29 +13,32 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  int bottomNavBarSelectedItem = 0;
   HomeData homeData = HomeData();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(100),
+        preferredSize: const Size.fromHeight(95),
         child: Padding(
-          padding: const EdgeInsets.only(top: 15, left: 10, right: 10),
+          padding: const EdgeInsets.only(top: 30, left: 10, right: 10),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
+                // ignore: prefer_const_literals_to_create_immutables
                 children: [
-                  Icon(Icons.location_on),
-                  Text(
+                  const Icon(Icons.location_on),
+                  const Text(
                     "Chirag Delhi",
                     style: TextStyle(
                         color: Colors.black, fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 6),
               TextField(
                 decoration: InputDecoration(
                     focusedBorder: OutlineInputBorder(
@@ -47,41 +53,49 @@ class _HomeState extends State<Home> {
                       Icons.search,
                       color: Colors.black,
                     ),
-                    hintText: "dsa"),
+                    hintText: "Find Cars, Mobile Phones and more"),
               )
             ],
           ),
         ),
       ),
-      body: Container(margin: EdgeInsets.only(top: 5),
+      bottomNavigationBar: BottomNavBar(),
+      body: Container(
+        margin: const EdgeInsets.only(top: 5),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 13.0, top: 14, bottom: 14),
+            const Padding(
+              padding: EdgeInsets.only(left: 13.0, top: 5, bottom: 14),
               child: Text(
                 "Fresh Recommendations",
                 style: TextStyle(fontSize: 20),
               ),
             ),
             SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.11,
-                  width: MediaQuery.of(context).size.width,
-                  child: ListView.builder(itemCount: homeData.HomeList.length,
+                height: MediaQuery.of(context).size.height * 0.11,
+                width: MediaQuery.of(context).size.width,
+                child: ListView.builder(
+                    itemCount: homeData.HomeList.length,
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
                       return RoundedImage(
-                              src: homeData.HomeList[index]["image"],
-                              text: homeData.HomeList[index]["text"]);
-                    }
-                    )),
+                          src: homeData.HomeList[index]["image"],
+                          text: homeData.HomeList[index]["text"]);
+                    })),
+                    SizedBox(height: 1),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.71,
+              height: MediaQuery.of(context).size.height * 0.58,
               width: MediaQuery.of(context).size.width,
               child: GridView.builder(
-                gridDelegate:
-                    SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                   childAspectRatio: MediaQuery.of(context).size.width /
+              (MediaQuery.of(context).size.height*0.60),
+        
+                    
+                    ),
                 shrinkWrap: true,
                 itemCount: homeData.HomeList.length,
                 itemBuilder: (context, index) {
@@ -94,19 +108,83 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+  Widget BottomNavBar() {
+  return BottomNavigationBar(
+      selectedItemColor: Colors.cyan,
+      unselectedItemColor: Colors.black,
+      unselectedLabelStyle: const TextStyle(color: Colors.black),
+      showUnselectedLabels: true,
+      currentIndex: bottomNavBarSelectedItem,
+      onTap: (value) {
+        setState(() {
+          bottomNavBarSelectedItem = value;
+        });
+        if (bottomNavBarSelectedItem == 0) {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => const Home()));
+        } else if (bottomNavBarSelectedItem == 1) {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const ChatPage()));
+        } else if (bottomNavBarSelectedItem == 2) {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => const Home()));
+        } else if (bottomNavBarSelectedItem == 3) {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => MyAdsPage()));
+        } else if (bottomNavBarSelectedItem == 4) {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const AccountPage()));
+        }
+      },
+      // ignore: prefer_const_literals_to_create_immutables
+      items: [
+        const BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home,
+            ),
+            label: "Home"),
+        const BottomNavigationBarItem(
+            icon: Icon(
+              Icons.chat,
+            ),
+            label: "Chat"),
+        const BottomNavigationBarItem(
+            icon: Icon(
+              Icons.add,
+            ),
+            label: "Sell"),
+        const BottomNavigationBarItem(
+            icon: Icon(
+              Icons.bug_report_rounded,
+            ),
+            label: "My Ads"),
+        const BottomNavigationBarItem(
+            icon: Icon(
+              Icons.account_circle_sharp,
+            ),
+            label: "Profile"),
+      ]);
+}
 }
 
+
+
+
+// ignore: non_constant_identifier_names
 Widget HomeCard(context, home) {
-  void openAd (context){
-    Navigator.push(context, MaterialPageRoute(builder: (context) => AdPage(home: home)));
+  void openAd(context) {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => AdPage(home: home)));
   }
-  return GestureDetector(onTap: () {
-    openAd(context);
-  },
+
+  return GestureDetector(
+    onTap: () {
+      openAd(context);
+    },
     child: Container(
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
-        height: 220,
-        width: MediaQuery.of(context).size.width*0.5,
+        height: 100,
+        width: MediaQuery.of(context).size.width * 0.5,
         child: Padding(
           padding: const EdgeInsets.all(5.0),
           child: Card(
@@ -122,42 +200,49 @@ Widget HomeCard(context, home) {
                       child: Image.network(
                         "${home["image"]}",
                         fit: BoxFit.cover,
-                        height: 138,
+                        height: 125,
                         width: MediaQuery.of(context).size.width,
                       )),
-                  Text(
-                    "${home['text']}",
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontSize: 18,
+                  Padding(
+                    padding: const EdgeInsets.only(left:4.7),
+                    child: Text(
+                      "${home['text']}",
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 16,fontWeight: FontWeight.w500
+                      ),
                     ),
                   ),
-                  Text(
-                    "${home["text"]}",
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontSize: 14,
+                  Padding(
+                    padding: const EdgeInsets.only(left:4.7),
+                    child: Text(
+                      "${home["text"]}",
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 12,
+                      ),
                     ),
                   ),
-                  Text(
-                    "${home["text"]}",
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontSize: 14,
+                  Padding(
+                    padding: const EdgeInsets.only(left:4.7),
+                    child: Text(
+                      "${home["text"]}",
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 12,
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 5,
                   ),
                   Row(
                     children: [
-                      Icon(
-                        Icons.location_on_outlined,
+                      const Icon(
+                        Icons.location_on_outlined,size: 18.0,
                         color: Colors.grey,
                       ),
                       Text(
                         "${home["text"]}",
-                        style: TextStyle(color: Colors.grey, fontSize: 13),
+                        style:
+                            const TextStyle(color: Colors.grey, fontSize: 11.5),
                       ),
                     ],
                   )
@@ -169,11 +254,12 @@ Widget HomeCard(context, home) {
   );
 }
 
+// ignore: non_constant_identifier_names
 Widget RoundedImage({src, text}) {
   return ClipRRect(
-      borderRadius: BorderRadius.circular(28),
+      borderRadius: BorderRadius.circular(12),
       child: Padding(
-        padding: const EdgeInsets.only(left: 10),
+        padding: const EdgeInsets.only(left: 10,right:5),
         child: Container(
           alignment: Alignment.center,
           height: 60,
@@ -183,19 +269,19 @@ Widget RoundedImage({src, text}) {
                   image: Image.network(
                 "$src",
                 height: 50,
-                width: 120,
+                width: 40,
                 fit: BoxFit.cover,
               ).image),
-              borderRadius: BorderRadius.all(Radius.circular(28))),
+              borderRadius: const BorderRadius.all(Radius.circular(8))),
           child: Container(
-              height: 77.5,
-              width: 116.2,
+              height: 78.5,
+              width: 116,
               alignment: Alignment.center,
-              color: Color.fromARGB(55, 8, 8, 8),
+              color: const Color.fromARGB(55, 8, 8, 8),
               child: Text(
                 "$text",
-                style:
-                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                    color: Colors.white, fontWeight: FontWeight.bold),
               )),
         ),
       ));
