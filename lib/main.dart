@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:olx/screens/accountPage.dart';
-import 'package:olx/screens/adPage.dart';
-import 'package:olx/screens/chatPage.dart';
 import 'package:olx/screens/loginPage.dart';
-import 'package:olx/screens/myAdsPage.dart';
-import 'package:olx/screens/viewProfile.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-import 'screens/HomePage.dart';
-
-void main(){
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -22,7 +21,6 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       // theme: ThemeData(primarySwatch: Colors.green),
       home: LoginPage(),
-      
     );
   }
 }
