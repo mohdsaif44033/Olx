@@ -3,6 +3,7 @@ import 'package:get/route_manager.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:olx/screens/loginPage.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:olx/screens/signupPage.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
       // theme: ThemeData(fontFamily: GoogleFonts.lato().fontFamily),
       debugShowCheckedModeBanner: false,
       // theme: ThemeData(primarySwatch: Colors.green),
-      home: LoginPage(),
+      home: SignupPage(),
     );
   }
 }
