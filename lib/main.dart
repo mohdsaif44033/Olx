@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:olx/screens/loginPage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await GetStorage.init();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -16,7 +19,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const GetMaterialApp(
       // theme: ThemeData(fontFamily: GoogleFonts.lato().fontFamily),
       debugShowCheckedModeBanner: false,
       // theme: ThemeData(primarySwatch: Colors.green),
