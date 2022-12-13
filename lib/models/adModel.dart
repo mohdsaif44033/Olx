@@ -1,5 +1,3 @@
-import 'dart:html';
-
 class AdModel{
   DateTime? createdAt;
   List? createdBy;
@@ -7,7 +5,7 @@ class AdModel{
   String? details;
   List? image;
   int? likes;
-  Geoposition? location;
+  List? location;
   int? price;
   String? title;
 
