@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:olx/screens/accountPage.dart';
-import 'package:olx/screens/adPage.dart';
-import 'package:olx/screens/chatPage.dart';
+import 'package:get/route_manager.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:olx/screens/loginPage.dart';
-import 'package:olx/screens/myAdsPage.dart';
-import 'package:olx/screens/signupPage.dart';
-import 'package:olx/screens/viewProfile.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:olx/screens/signupPage.dart';
 import 'firebase_options.dart';
-import 'screens/HomePage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await GetStorage.init();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -24,7 +20,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
+    return const GetMaterialApp(
       // theme: ThemeData(fontFamily: GoogleFonts.lato().fontFamily),
       debugShowCheckedModeBanner: false,
       // theme: ThemeData(primarySwatch: Colors.green),

@@ -11,14 +11,13 @@ class AuthController extends GetxController {
       creds = await firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: pass);
       if (creds != null) {
-        Get.offAll(() => const Home());
+        return creds!.user!.uid;
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
         print('The account already exists for that email.');
-        login(email: email, pass: pass);
       }
     } catch (e) {
       print(e);
@@ -29,7 +28,9 @@ class AuthController extends GetxController {
     try {
       creds = await firebaseAuth.signInWithEmailAndPassword(
           email: email, password: pass);
-      Get.offAll(() => const Home());
+      if (creds != null) {
+        Get.offAll(() => const Home());
+      }
     } on FirebaseAuthException catch (e) {
       print(e.code);
       if (e.code == 'user-not-found') {
