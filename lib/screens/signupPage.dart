@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:olx/controllers/authController.dart';
+import 'package:olx/controllers/userController.dart';
 import 'package:olx/screens/HomePage.dart';
 
 class SignupPage extends StatefulWidget {
@@ -14,6 +15,8 @@ class _SignupPageState extends State<SignupPage> {
   // var isLoading = true;
   String name = "";
   bool changeButton = false;
+  UserController userController = UserController();
+  AuthController authController = AuthController();
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
@@ -43,7 +46,6 @@ class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -87,7 +89,6 @@ class _SignupPageState extends State<SignupPage> {
                         ),
                         TextFormField(
                           controller: emailController,
-                          
                           decoration: const InputDecoration(
                               hintText: "Email", labelText: "Email"),
                           validator: (value) {
@@ -98,7 +99,8 @@ class _SignupPageState extends State<SignupPage> {
                             }
                             return null;
                           },
-                        ),TextFormField(
+                        ),
+                        TextFormField(
                           controller: passController,
                           obscureText: true,
                           decoration: const InputDecoration(
@@ -111,9 +113,9 @@ class _SignupPageState extends State<SignupPage> {
                             }
                             return null;
                           },
-                        ),TextFormField(
+                        ),
+                        TextFormField(
                           controller: phoneController,
-                  
                           decoration: const InputDecoration(
                               hintText: "Phone", labelText: "Phone"),
                           validator: (value) {
@@ -128,14 +130,23 @@ class _SignupPageState extends State<SignupPage> {
                         const SizedBox(
                           height: 40.0,
                         ),
-                        
                         Material(
                           color: Colors.cyan,
                           borderRadius:
                               BorderRadius.circular(changeButton ? 50 : 8),
                           child: InkWell(
-                            onTap: () {
-                             
+                            onTap: () async {
+                              // Sign Up
+                              var uid = await authController.signUp(
+                                  email: emailController.text,
+                                  pass: passController.text);
+
+                              // Create User
+                              await userController.createUser(
+                                  name: nameController.text,
+                                  email: emailController.text,
+                                  phone: phoneController.text,
+                                  uid: uid);
                             },
                             child: AnimatedContainer(
                               duration: const Duration(seconds: 1),
