@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       // theme: ThemeData(fontFamily: GoogleFonts.lato().fontFamily),
       debugShowCheckedModeBanner: false,
       // theme: ThemeData(primarySwatch: Colors.green),
-      home: SignupPage(),
+      home: LoginPage(),
     );
   }
 }

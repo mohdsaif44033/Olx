@@ -1,10 +1,14 @@
 // User CRUD
-// C - Create
-// R - Read
+// C - Create - Done
+// R - Read - Going On
 // U - Update
 // D - Delete
 
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get.dart';
+import 'package:olx/models/userModel.dart';
 
 class UserController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -30,5 +34,26 @@ class UserController {
       print(e);
       return false;
     }
+  }
+
+  getUser({uid}) async {
+    CollectionReference users = firestore.collection('Users');
+    QuerySnapshot user = await users.where("uid", isEqualTo: uid).get();
+
+    if (user.docs.isNotEmpty) {
+      var userAsJson = user.docs.first;
+
+      UserModel userModel = UserModel(
+          email: userAsJson.get("email"),
+          uid: userAsJson.get("uid"),
+          createdAt:
+              DateTime.fromMicrosecondsSinceEpoch(userAsJson.get("time")),
+          favouriteAd: userAsJson.get("favourites"),
+          name: userAsJson.get("name"),
+          phone: userAsJson.get("phone"),
+          totalAds: userAsJson.get("totalAds"));
+      return userModel;
+    }
+    return null;
   }
 }

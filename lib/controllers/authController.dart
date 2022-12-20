@@ -29,14 +29,15 @@ class AuthController extends GetxController {
       creds = await firebaseAuth.signInWithEmailAndPassword(
           email: email, password: pass);
       if (creds != null) {
-        Get.offAll(() => const Home());
+        return creds!.user!.uid;
       }
     } on FirebaseAuthException catch (e) {
       print(e.code);
       if (e.code == 'user-not-found') {
-        print('No user found for that email.');
+        Get.snackbar('No user found for that email.', "");
       } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
+        Get.snackbar('Wrong password provided for that user.', "",
+            snackPosition: SnackPosition.BOTTOM);
       }
     } catch (e) {
       print(e);
