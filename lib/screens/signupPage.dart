@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:olx/controllers/authController.dart';
 import 'package:olx/controllers/userController.dart';
 import 'package:olx/screens/HomePage.dart';
+import 'package:olx/screens/loginPage.dart';
+import 'package:olx/screens/phoneLogin.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -167,7 +169,22 @@ class _SignupPageState extends State<SignupPage> {
                                     ),
                             ),
                           ),
-                        )
+                        ),SizedBox(height: 15,),TextButton(
+                                          style: TextButton.styleFrom(
+                                            textStyle: const TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.cyan,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          onPressed: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const PhoneLogin()));
+                                          },
+                                          child: Text('Sign Up with Phone'),
+                                        ),
                       ],
                     ),
                   )

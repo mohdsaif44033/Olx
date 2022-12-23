@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:olx/controllers/homeData.dart';
+import 'package:olx/controllers/userController.dart';
 import 'package:olx/screens/accountPage.dart';
 import 'package:olx/screens/adPage.dart';
 import 'package:olx/screens/chatPage.dart';
@@ -15,6 +16,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int bottomNavBarSelectedItem = 0;
   HomeData homeData = HomeData();
+  UserController userController = UserController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,11 +33,15 @@ class _HomeState extends State<Home> {
                 // ignore: prefer_const_literals_to_create_immutables
                 children: [
                   const Icon(Icons.location_on),
-                  const Text(
-                    "Chirag Delhi",
-                    style: TextStyle(
-                        color: Colors.black, fontWeight: FontWeight.bold),
-                  ),
+                   GestureDetector(onTap: () {
+                     userController.getAd();
+                   },
+                     child: Text(
+                      "Chirag Delhi",
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                                     ),
+                   ),
                 ],
               ),
               const SizedBox(height: 6),

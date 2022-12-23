@@ -8,6 +8,7 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:olx/models/adModel.dart';
 import 'package:olx/models/userModel.dart';
 
 class UserController {
@@ -56,4 +57,35 @@ class UserController {
     }
     return null;
   }
+
+  getAd() async {
+    CollectionReference ad = firestore.collection('Advertisement');
+    QuerySnapshot advertisement = await ad.get();
+    var advertisementJsonArray = advertisement.docs;
+     var advertisementArray = [];
+     var i=0;
+    if (advertisementJsonArray.isNotEmpty) {
+     
+      for (i=0; i<advertisementJsonArray.length; i++){
+      
+
+      AdModel adModel = AdModel(
+        createdAt: DateTime.fromMicrosecondsSinceEpoch(advertisementJsonArray[i].get("time")),
+        createdBy: advertisementJsonArray[i].get('createdBy'),
+        desc: advertisementJsonArray[i].get('desc'),
+        details: advertisementJsonArray[i].get('details'),
+        image: advertisementJsonArray[i].get('image'),
+        likes: advertisementJsonArray[i].get('likes'),
+        location: advertisementJsonArray[i].get('location'),
+        price: advertisementJsonArray[i].get('price'),
+        title: advertisementJsonArray[i].get('title'),
+      );
+      advertisementArray.add(adModel);
+      }
+      print("advertisementArray: $advertisementArray");
+      return advertisementArray;
+
+  }
+  return null;
+}
 }
