@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:olx/screens/loginPage.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class OtpScreen extends StatefulWidget {
@@ -99,7 +100,7 @@ class _OtpScreenState extends State<OtpScreen> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => const OtpScreen()));
+                                      builder: (context) => const LoginPage()));
                             },
                             child: Container(
                               height: 50,
