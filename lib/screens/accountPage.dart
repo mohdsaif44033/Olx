@@ -274,13 +274,13 @@ class _AccountPageState extends State<AccountPage> {
         });
         if (bottomNavBarSelectedItem == 0) {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => const Home()));
+              context, MaterialPageRoute(builder: (context) =>  Home()));
         } else if (bottomNavBarSelectedItem == 1) {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => const ChatPage()));
         } else if (bottomNavBarSelectedItem == 2) {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => const Home()));
+              context, MaterialPageRoute(builder: (context) =>  Home()));
         } else if (bottomNavBarSelectedItem == 3) {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => MyAdsPage()));

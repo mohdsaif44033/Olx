@@ -1,22 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:olx/controllers/homeData.dart';
-import 'package:olx/controllers/userController.dart';
-import 'package:olx/screens/accountPage.dart';
+import 'package:get/get.dart';
+import 'package:olx/controllers/homeController.dart';
+import 'package:olx/models/adModel.dart';
 import 'package:olx/screens/adPage.dart';
-import 'package:olx/screens/chatPage.dart';
-import 'package:olx/screens/myAdsPage.dart';
 
-class Home extends StatefulWidget {
-  const Home({super.key});
+class Home extends StatelessWidget {
+  Home({Key? key}) : super(key: key);
 
-  @override
-  State<Home> createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
   int bottomNavBarSelectedItem = 0;
-  HomeData homeData = HomeData();
-  UserController userController = UserController();
+  HomeController homeController = Get.put(HomeController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +27,7 @@ class _HomeState extends State<Home> {
                 children: [
                   const Icon(Icons.location_on),
                    GestureDetector(onTap: () {
-                     userController.getAd();
+                    homeController.getAd();
                    },
                      child: Text(
                       "Chirag Delhi",
@@ -78,20 +71,20 @@ class _HomeState extends State<Home> {
                 style: TextStyle(fontSize: 20),
               ),
             ),
-            SizedBox(
+        Obx(()=>    SizedBox(
                 height: MediaQuery.of(context).size.height * 0.11,
                 width: MediaQuery.of(context).size.width,
                 child: ListView.builder(
-                    itemCount: homeData.HomeList.length,
+                    itemCount:homeController.adArray.length,
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
-                      return RoundedImage(
-                          src: homeData.HomeList[index]["image"],
-                          text: homeData.HomeList[index]["text"]);
-                    })),
+                      return Obx(()=> RoundedImage(
+                          src: homeController.adArray[index].image,
+                          text: homeController.adArray[index].title));
+                    }))),
                     SizedBox(height: 1),
-            SizedBox(
+       Obx(()=>     SizedBox(
               height: MediaQuery.of(context).size.height * 0.58,
               width: MediaQuery.of(context).size.width,
               child: GridView.builder(
@@ -103,11 +96,12 @@ class _HomeState extends State<Home> {
                     
                     ),
                 shrinkWrap: true,
-                itemCount: homeData.HomeList.length,
+                itemCount: homeController.adArray.length,
                 itemBuilder: (context, index) {
-                  return HomeCard(context, homeData.HomeList[index]);
+                  return HomeCard(context, homeController.adArray[index]);
                 },
               ),
+            )
             ),
           ],
         ),
@@ -122,25 +116,25 @@ class _HomeState extends State<Home> {
       showUnselectedLabels: true,
       currentIndex: bottomNavBarSelectedItem,
       onTap: (value) {
-        setState(() {
-          bottomNavBarSelectedItem = value;
-        });
-        if (bottomNavBarSelectedItem == 0) {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => const Home()));
-        } else if (bottomNavBarSelectedItem == 1) {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const ChatPage()));
-        } else if (bottomNavBarSelectedItem == 2) {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => const Home()));
-        } else if (bottomNavBarSelectedItem == 3) {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => MyAdsPage()));
-        } else if (bottomNavBarSelectedItem == 4) {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const AccountPage()));
-        }
+        // setState(() {
+        //   bottomNavBarSelectedItem = value;
+        // });
+        // if (bottomNavBarSelectedItem == 0) {
+        //   Navigator.push(
+        //       context, MaterialPageRoute(builder: (context) => const Home()));
+        // } else if (bottomNavBarSelectedItem == 1) {
+        //   Navigator.push(context,
+        //       MaterialPageRoute(builder: (context) => const ChatPage()));
+        // } else if (bottomNavBarSelectedItem == 2) {
+        //   Navigator.push(
+        //       context, MaterialPageRoute(builder: (context) => const Home()));
+        // } else if (bottomNavBarSelectedItem == 3) {
+        //   Navigator.push(context,
+        //       MaterialPageRoute(builder: (context) => MyAdsPage()));
+        // } else if (bottomNavBarSelectedItem == 4) {
+        //   Navigator.push(context,
+        //       MaterialPageRoute(builder: (context) => const AccountPage()));
+        // }
       },
       // ignore: prefer_const_literals_to_create_immutables
       items: [
@@ -171,13 +165,13 @@ class _HomeState extends State<Home> {
             label: "Profile"),
       ]);
 }
-}
+
 
 
 
 
 // ignore: non_constant_identifier_names
-Widget HomeCard(context, home) {
+Widget HomeCard(context,AdModel home) {
   void openAd(context) {
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => AdPage(home: home)));
@@ -204,7 +198,7 @@ Widget HomeCard(context, home) {
                   ClipRRect(
                       borderRadius: BorderRadius.circular(3),
                       child: Image.network(
-                        "${home["image"]}",
+                        "${home.image}",
                         fit: BoxFit.cover,
                         height: 125,
                         width: MediaQuery.of(context).size.width,
@@ -212,7 +206,7 @@ Widget HomeCard(context, home) {
                   Padding(
                     padding: const EdgeInsets.only(left:4.7),
                     child: Text(
-                      "${home['text']}",
+                      "${home.title}",
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         fontSize: 16,fontWeight: FontWeight.w500
@@ -222,7 +216,7 @@ Widget HomeCard(context, home) {
                   Padding(
                     padding: const EdgeInsets.only(left:4.7),
                     child: Text(
-                      "${home["text"]}",
+                      "${home.title}",
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         fontSize: 12,
@@ -232,7 +226,7 @@ Widget HomeCard(context, home) {
                   Padding(
                     padding: const EdgeInsets.only(left:4.7),
                     child: Text(
-                      "${home["text"]}",
+                      "${home.title}",
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         fontSize: 12,
@@ -246,7 +240,7 @@ Widget HomeCard(context, home) {
                         color: Colors.grey,
                       ),
                       Text(
-                        "${home["text"]}",
+                        "${home.title}",
                         style:
                             const TextStyle(color: Colors.grey, fontSize: 11.5),
                       ),
@@ -291,4 +285,5 @@ Widget RoundedImage({src, text}) {
               )),
         ),
       ));
+}
 }

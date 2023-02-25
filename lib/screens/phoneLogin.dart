@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:olx/screens/otpScreen.dart';
@@ -10,6 +11,19 @@ class PhoneLogin extends StatefulWidget {
 }
 
 class _PhoneLoginState extends State<PhoneLogin> {
+   Future<void> verifyPhone(String number) async{
+    await FirebaseAuth.instance.verifyPhoneNumber(
+  phoneNumber: "+91" + number,
+  timeout: const Duration(seconds: 20),
+  verificationCompleted: (PhoneAuthCredential credential) {},
+  verificationFailed: (FirebaseAuthException e) {},
+  codeSent: (String verificationId, int? resendToken) {},
+  codeAutoRetrievalTimeout: (String verificationId) {},
+
+);
+
+  }
+  TextEditingController phoneController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,6 +55,7 @@ class _PhoneLoginState extends State<PhoneLogin> {
                             initialCountryCode: 'IN',
                             showCountryFlag: false,
                             showDropdownIcon: false,
+                            controller: phoneController,
                           decoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(
                           borderSide:
@@ -61,7 +76,14 @@ class _PhoneLoginState extends State<PhoneLogin> {
                             borderRadius: BorderRadius.circular(8),
                             child: InkWell(
                               onTap: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => const OtpScreen()));
+                                if(phoneController.text.isEmpty){
+                                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Phone is still empty!")));
+                                }
+                               
+                                else{
+                                  verifyPhone(phoneController.text);
+                                // Navigator.push(context, MaterialPageRoute(builder: (context) => OtpScreen(phone : phoneController.text )));
+                                }
                               },
                               child: Container(
                                 height: 50,

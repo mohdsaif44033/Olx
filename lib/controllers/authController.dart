@@ -29,6 +29,7 @@ class AuthController extends GetxController {
       creds = await firebaseAuth.signInWithEmailAndPassword(
           email: email, password: pass);
       if (creds != null) {
+        print('user id >>>${creds!.user!.uid}');
         return creds!.user!.uid;
       }
     } on FirebaseAuthException catch (e) {

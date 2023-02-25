@@ -34,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
       await Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const Home(),
+            builder: (context) =>  Home(),
           ));
       setState(() {
         changeButton = false;
@@ -117,14 +117,17 @@ class _LoginPageState extends State<LoginPage> {
                                           pass: passController.text);
 
                                       if (uid != null) {
-                                        UserModel? user = await UserController()
-                                            .getUser(uid: uid);
-                                        if (user != null) {
-                                          Get.offAll(() => const Home());
-                                        } else {
-                                          Get.snackbar("Login Failed",
-                                              "Go Uninstall It.");
-                                        }
+                                        Get.offAll(() =>  Home());
+                                         Get.snackbar("Login SUccessful",
+                                              "");
+                                        // UserModel user = await UserController()
+                                        //     .getUser(uid: uid);
+                                        // if (user != null) {
+                                        //   Get.offAll(() => const Home());
+                                        // } else {
+                                        //   Get.snackbar("Login Failed",
+                                        //       "Go Uninstall It.");
+                                        // }
                                       }
                                     },
                                     loadingWidget: const Center(

@@ -1,16 +1,26 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:olx/screens/loginPage.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class OtpScreen extends StatefulWidget {
-  const OtpScreen({super.key});
+  final String phone;
+  const OtpScreen({super.key, required this.phone});
 
   @override
   State<OtpScreen> createState() => _OtpScreenState();
 }
 
 class _OtpScreenState extends State<OtpScreen> {
+  String otpPin = "";
+ 
+  String countryDial = "+91";
+  String phone = "";
+  
+ 
+  TextEditingController phoneController = TextEditingController();
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +52,7 @@ class _OtpScreenState extends State<OtpScreen> {
                       Text("We just sent a code to ",
                           style: TextStyle(fontSize: 19, color: Colors.grey)),
                       Text(
-                        "9506644033",
+                        countryDial + phone,
                         style: TextStyle(
                             fontSize: 19,
                             color: Colors.black,
@@ -62,7 +72,7 @@ class _OtpScreenState extends State<OtpScreen> {
                       children: [
                         PinCodeTextField(
                           appContext: context,
-                          length: 4,
+                          length: 6,
                           onChanged: (value) {},
                           pinTheme: PinTheme(
                               activeColor: Colors.black,

@@ -1,30 +1,30 @@
 class UserModel {
-  String? email;
-  String? uid;
-  String? name;
-  String? phone;
-  DateTime? createdAt;
-  int? totalAds;
-  List? favouriteAd;
+  String email;
+  String uid;
+  String name;
+  String phone;
+  DateTime createdAt;
+  int totalAds;
+  List favouriteAd;
 
   UserModel(
-      {this.email,
-      this.name,
-      this.uid,
-      this.favouriteAd,
-      this.phone,
-      this.totalAds,
-      this.createdAt});
+      {required this.email,
+      required this.name,
+      required this.uid,
+      required this.favouriteAd,
+      required this.phone,
+      required this.totalAds,
+      required this.createdAt});
 
   fromJson(Map<String, dynamic> json) {
     return UserModel(
-        name: json['name'],
-        email: json['email'],
-        phone: json['phone'],
-        createdAt: json['time'],
-        uid: json["uid"],
-        favouriteAd: json['favouriteAd'],
-        totalAds: json['totalAds']);
+        name: json['name']??'',
+        email: json['email']??'',
+        phone: json['phone']??'',
+        createdAt: json['time']??'',
+        uid: json["uid"]??'',
+        favouriteAd: json['favouriteAd']??'',
+        totalAds: json['totalAds'] ??'');
   }
 
   toJson() {

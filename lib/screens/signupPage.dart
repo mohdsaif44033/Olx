@@ -37,7 +37,7 @@ class _SignupPageState extends State<SignupPage> {
       await Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const Home(),
+            builder: (context) =>  Home(),
           ));
       setState(() {
         changeButton = false;
@@ -144,11 +144,15 @@ class _SignupPageState extends State<SignupPage> {
                                   pass: passController.text);
 
                               // Create User
-                              await userController.createUser(
+                             var isUserValid =  await userController.createUser(
                                   name: nameController.text,
                                   email: emailController.text,
                                   phone: phoneController.text,
                                   uid: uid);
+                              print('isvalid $isUserValid');
+                              if(isUserValid){
+                                 Get.offAll(() => const LoginPage());
+                                }
                             },
                             child: AnimatedContainer(
                               duration: const Duration(seconds: 1),

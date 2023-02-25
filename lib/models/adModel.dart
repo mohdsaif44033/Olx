@@ -3,7 +3,7 @@ class AdModel{
   List? createdBy;
   String? desc;
   String? details;
-  List? image;
+  String? image;
   int? likes;
   List? location;
   int? price;
