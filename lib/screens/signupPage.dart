@@ -150,9 +150,10 @@ class _SignupPageState extends State<SignupPage> {
                                   phone: phoneController.text,
                                   uid: uid);
                               print('isvalid $isUserValid');
+                              
                               if(isUserValid){
                                  Get.offAll(() => const LoginPage());
-                                }
+                              }
                             },
                             child: AnimatedContainer(
                               duration: const Duration(seconds: 1),

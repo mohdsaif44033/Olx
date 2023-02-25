@@ -1,8 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:olx/screens/loginPage.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+
+import '../controllers/authController.dart';
 
 class OtpScreen extends StatefulWidget {
   final String phone;
@@ -14,13 +17,20 @@ class OtpScreen extends StatefulWidget {
 
 class _OtpScreenState extends State<OtpScreen> {
   String otpPin = "";
- 
+
   String countryDial = "+91";
   String phone = "";
-  
- 
   TextEditingController phoneController = TextEditingController();
-  
+
+  var auth = Get.put(AuthController());
+
+  signIn(otp, verificationId) async {
+    PhoneAuthCredential credential = PhoneAuthProvider.credential(
+        verificationId: verificationId, smsCode: otp);
+    UserCredential usrCred =
+        await FirebaseAuth.instance.signInWithCredential(credential);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,7 +92,8 @@ class _OtpScreenState extends State<OtpScreen> {
                         const SizedBox(
                           height: 8.0,
                         ),
-                        Row(mainAxisAlignment: MainAxisAlignment.center,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text("Didn't recieve the code?",
                                 style: TextStyle(
@@ -95,7 +106,12 @@ class _OtpScreenState extends State<OtpScreen> {
                                     fontWeight: FontWeight.bold),
                               ),
                               onPressed: () {},
-                              child: Text('Resend',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
+                              child: Text(
+                                'Resend',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                              ),
                             ),
                           ],
                         ),
@@ -107,10 +123,7 @@ class _OtpScreenState extends State<OtpScreen> {
                           borderRadius: BorderRadius.circular(8),
                           child: InkWell(
                             onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const LoginPage()));
+                              signIn(822322, auth.verificationIdPhone.value);
                             },
                             child: Container(
                               height: 50,

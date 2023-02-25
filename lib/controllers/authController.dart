@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:olx/screens/HomePage.dart';
 
 class AuthController extends GetxController {
   var firebaseAuth = FirebaseAuth.instance;
   UserCredential? creds;
+  RxString verificationIdPhone = "".obs;
 
   signUp({email, pass}) async {
     try {

@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:olx/controllers/authController.dart';
 import 'package:olx/screens/otpScreen.dart';
 
 class PhoneLogin extends StatefulWidget {
@@ -11,104 +13,110 @@ class PhoneLogin extends StatefulWidget {
 }
 
 class _PhoneLoginState extends State<PhoneLogin> {
-   Future<void> verifyPhone(String number) async{
+  var auth = Get.put(AuthController());
+
+  Future<void> verifyPhone(String number) async {
     await FirebaseAuth.instance.verifyPhoneNumber(
-  phoneNumber: "+91" + number,
-  timeout: const Duration(seconds: 20),
-  verificationCompleted: (PhoneAuthCredential credential) {},
-  verificationFailed: (FirebaseAuthException e) {},
-  codeSent: (String verificationId, int? resendToken) {},
-  codeAutoRetrievalTimeout: (String verificationId) {},
-
-);
-
+      phoneNumber: "+91$number",
+      timeout: const Duration(seconds: 60),
+      verificationCompleted: (PhoneAuthCredential credential) {},
+      verificationFailed: (FirebaseAuthException e) {},
+      codeSent: (String verificationId, int? resendToken) {
+        auth.verificationIdPhone.value = verificationId;
+        Get.to(() => OtpScreen(phone: number));
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {},
+    );
   }
+
   TextEditingController phoneController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
-            children: [
-              Form(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [SizedBox(height: 180,),
-                    Container(
-                      height: 200,
-                      width: MediaQuery.of(context).size.width,
-                      alignment: Alignment.center,
-                      child: const CircleAvatar(
-                        backgroundImage: NetworkImage(
-                            "https://img.freepik.com/free-vector/cute-hippo-waving-hand-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated-premium_138676-4749.jpg?w=2000"),
-                        radius: 100.0,
-                      ),
+          children: [
+            Form(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 180,
+                  ),
+                  Container(
+                    height: 200,
+                    width: MediaQuery.of(context).size.width,
+                    alignment: Alignment.center,
+                    child: const CircleAvatar(
+                      backgroundImage: NetworkImage(
+                          "https://img.freepik.com/free-vector/cute-hippo-waving-hand-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated-premium_138676-4749.jpg?w=2000"),
+                      radius: 100.0,
                     ),
-                    const SizedBox(height: 20),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 16.0, horizontal: 32.0),
-                      child: Column(
-                        children: [
-                          IntlPhoneField(
-                            initialCountryCode: 'IN',
-                            showCountryFlag: false,
-                            showDropdownIcon: false,
-                            controller: phoneController,
+                  ),
+                  const SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 16.0, horizontal: 32.0),
+                    child: Column(
+                      children: [
+                        IntlPhoneField(
+                          initialCountryCode: 'IN',
+                          showCountryFlag: false,
+                          showDropdownIcon: false,
+                          controller: phoneController,
                           decoration: InputDecoration(
-                      focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Colors.black, width: 2.0),
-                          borderRadius: BorderRadius.circular(12)),
-                      border: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.blueGrey, width: 2.0),
-                          borderRadius: BorderRadius.circular(12)),
-                      hintText: "Phone Number"),
-                           )
-                          ,
-                          const SizedBox(
-                            height: 10.0,
-                          ),
-                          Material(
-                            color: Colors.cyan,
-                            borderRadius: BorderRadius.circular(8),
-                            child: InkWell(
-                              onTap: () {
-                                if(phoneController.text.isEmpty){
-                                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Phone is still empty!")));
-                                }
-                               
-                                else{
-                                  verifyPhone(phoneController.text);
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                      color: Colors.black, width: 2.0),
+                                  borderRadius: BorderRadius.circular(12)),
+                              border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.blueGrey, width: 2.0),
+                                  borderRadius: BorderRadius.circular(12)),
+                              hintText: "Phone Number"),
+                        ),
+                        const SizedBox(
+                          height: 10.0,
+                        ),
+                        Material(
+                          color: Colors.cyan,
+                          borderRadius: BorderRadius.circular(8),
+                          child: InkWell(
+                            onTap: () {
+                              if (phoneController.text.isEmpty) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content:
+                                            Text("Phone is still empty!")));
+                              } else {
+                                verifyPhone(phoneController.text);
                                 // Navigator.push(context, MaterialPageRoute(builder: (context) => OtpScreen(phone : phoneController.text )));
-                                }
-                              },
-                              child: Container(
-                                height: 50,
-                                width: 150,
-                                alignment: Alignment.center,
-                                child: const Text(
-                                  "Get OTP",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18),
-                                ),
+                              }
+                            },
+                            child: Container(
+                              height: 50,
+                              width: 150,
+                              alignment: Alignment.center,
+                              child: const Text(
+                                "Get OTP",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18),
                               ),
                             ),
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                ),
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
+        ),
       ),
-      );
-    
+    );
   }
 }
