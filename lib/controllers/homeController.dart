@@ -1,15 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:olx/models/adModel.dart';
+import 'package:olx/models/userModels.dart';
 
 class HomeController extends GetxController {
-
-RxList<AdModel> adArray = <AdModel>[].obs;
+  RxList<AdModel> adArray = <AdModel>[].obs;
   @override
   void onInit() {
     getAd();
     super.onInit();
   }
+
+  Rx<dynamic> user = null.obs;
 
   getAd() async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;

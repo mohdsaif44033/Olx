@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:olx/controllers/authController.dart';
 import 'package:olx/screens/otpScreen.dart';
 
 class SignupWithPhone extends StatefulWidget {
@@ -14,6 +15,7 @@ class SignupWithPhoneState extends State<SignupWithPhone> {
   TextEditingController passController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
+  var auth = Get.put(AuthController());
 
   final _formKey = GlobalKey<FormState>();
 
@@ -93,32 +95,11 @@ class SignupWithPhoneState extends State<SignupWithPhone> {
                         Material(
                           color: Colors.cyan,
                           child: InkWell(
-                            onTap: (){
-                              Get.off(OtpScreen(),arguments: [{"name": nameController.text},{"email": emailController.text},{"phone":phoneController.text}]);
+                            onTap: () {
+                              auth.verifyPhone(phoneController.text,
+                                  nameController.text, emailController.text);
                             },
-                            
-                            // onTap: () async {
-                            //   // Sign Up
-                            //   var uid = await authController.signUp(
-                            //       name: nameController.text,
-                            //       email: emailController.text,
-                            //       phone: phoneController.text,
-                            //       );
-
-                            //   // Create User
-                            //  var isUserValid =  await userController.createUser(
-                            //       name: nameController.text,
-                            //       email: emailController.text,
-                            //       phone: phoneController.text,
-                            //       uid: uid);
-                            //   print('isvalid $isUserValid');
-
-                            //   if(isUserValid){
-                            //      Get.off(() => OtpScreen(phone: 'number',));
-                            //   }
-                            // },
                             child: AnimatedContainer(
-                        
                               duration: const Duration(seconds: 1),
                               height: 50,
                               width: 150,

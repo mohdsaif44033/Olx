@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:olx/screens/otpScreen.dart';
 
 class AuthController extends GetxController {
   var firebaseAuth = FirebaseAuth.instance;
@@ -15,9 +16,9 @@ class AuthController extends GetxController {
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
+        Get.snackbar("Error", "Password is very weak, try again");
       } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+        Get.snackbar("Error", 'The account already exists for that email.');
       }
     } catch (e) {
       print(e);
@@ -43,5 +44,23 @@ class AuthController extends GetxController {
     } catch (e) {
       print(e);
     }
+  }
+
+  Future<void> verifyPhone(String number, String name, String email) async {
+    await FirebaseAuth.instance.verifyPhoneNumber(
+      phoneNumber: "+91$number",
+      timeout: const Duration(seconds: 60),
+      verificationCompleted: (PhoneAuthCredential credential) {},
+      verificationFailed: (FirebaseAuthException e) {},
+      codeSent: (String verificationId, int? resendToken) {
+        Get.to(() => const OtpScreen(), arguments: [
+          {"name": name},
+          {"email": email},
+          {"phone": number},
+          {"verificationId": verificationId}
+        ]);
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {},
+    );
   }
 }

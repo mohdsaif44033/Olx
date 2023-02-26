@@ -2,7 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:olx/controllers/homeController.dart';
+import 'package:olx/controllers/userController.dart';
+import 'package:olx/models/userModel.dart';
 import 'package:olx/screens/loginPage.dart';
+import 'package:olx/screens/phoneLogin.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 import '../controllers/authController.dart';
@@ -19,42 +23,67 @@ class _OtpScreenState extends State<OtpScreen> {
 
   String countryDial = "+91";
   String phone = "";
-  String email= "";
+  String email = "";
   String name = "";
+  String verificatioId = "";
 
   TextEditingController phoneController = TextEditingController();
 
   var auth = Get.put(AuthController());
 
-  signIn(otp, verificationId) async {
+  signUpWithOTP(otp) async {
     PhoneAuthCredential credential = PhoneAuthProvider.credential(
-        verificationId: verificationId, smsCode: otp);
+        verificationId: verificatioId, smsCode: otp);
     UserCredential usrCred =
         await FirebaseAuth.instance.signInWithCredential(credential);
-         var controller = Get.put(AuthController());
+    UserController userController = UserController();
+    bool isAdded = await userController.createUser(
+        uid: usrCred.user!.uid, name: name, email: email);
+    if (isAdded) {
+      Get.snackbar("Success", "User Added");
+      Get.offAll(() => const PhoneLogin());
+    }
   }
- getRegisterData(){
-  print('argument ${Get.arguments}');
- name =  Get.arguments[0]["name"];
- email =  Get.arguments[1]["email"];
- phone =  Get.arguments[2]["phone"];
- }
- 
- void onInitState(){
-  getRegisterData();
- super.initState();
- print("name:$name, email:$email,phone:$phone");}
+
+  var hc = Get.put(HomeController());
+
+  loginWithOTP(otp) async {
+    PhoneAuthCredential credential = PhoneAuthProvider.credential(
+        verificationId: verificatioId, smsCode: otp);
+    UserCredential usrCred =
+        await FirebaseAuth.instance.signInWithCredential(credential);
+    UserController userController = UserController();
+    UserModel user = userController.getUser(uid: usrCred.user!.uid);
+    if (user != null) {
+      hc.user.value = user;
+    }
+  }
+
+  getRegisterData() {
+    print('argument ${Get.arguments}');
+    name = Get.arguments[0]["name"];
+    email = Get.arguments[1]["email"];
+    phone = Get.arguments[2]["phone"];
+    verificatioId = Get.arguments[3]['verificationId'];
+  }
+
+  void onInitState() {
+    getRegisterData();
+    print("name:$name, email:$email,phone:$phone");
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:AppBar(
-  leading: IconButton(
-    icon: Icon(Icons.arrow_back, color: Colors.black),
-    onPressed: () => Navigator.of(context).pop(),
-  ), 
-  title: Text("Sample"),
-  centerTitle: true,
-),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        title: Text("Sample"),
+        centerTitle: true,
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -116,18 +145,18 @@ class _OtpScreenState extends State<OtpScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("Didn't recieve the code?",
+                            const Text("Didn't recieve the code?",
                                 style: TextStyle(
                                     fontSize: 19, color: Colors.grey)),
                             TextButton(
                               style: TextButton.styleFrom(
-                                textStyle: TextStyle(
+                                textStyle: const TextStyle(
                                     fontSize: 16,
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold),
                               ),
                               onPressed: () {},
-                              child: Text(
+                              child: const Text(
                                 'Resend',
                                 style: TextStyle(
                                     color: Colors.black,
@@ -144,7 +173,7 @@ class _OtpScreenState extends State<OtpScreen> {
                           borderRadius: BorderRadius.circular(8),
                           child: InkWell(
                             onTap: () {
-                              signIn(822322, auth.verificationIdPhone.value);
+                              signUpWithOTP(otpPin);
                             },
                             child: Container(
                               height: 50,
