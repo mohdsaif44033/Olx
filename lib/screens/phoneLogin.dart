@@ -23,7 +23,7 @@ class _PhoneLoginState extends State<PhoneLogin> {
       verificationFailed: (FirebaseAuthException e) {},
       codeSent: (String verificationId, int? resendToken) {
         auth.verificationIdPhone.value = verificationId;
-        Get.to(() => OtpScreen(phone: number));
+       // Get.to(() => OtpScreen(phone: number));
       },
       codeAutoRetrievalTimeout: (String verificationId) {},
     );

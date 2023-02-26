@@ -5,6 +5,7 @@ import 'package:olx/controllers/userController.dart';
 import 'package:olx/screens/HomePage.dart';
 import 'package:olx/screens/loginPage.dart';
 import 'package:olx/screens/phoneLogin.dart';
+import 'package:olx/screens/signUpWithPhone.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -186,7 +187,7 @@ class _SignupPageState extends State<SignupPage> {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        const PhoneLogin()));
+                                                        const SignupWithPhone()));
                                           },
                                           child: Text('Sign Up with Phone'),
                                         ),

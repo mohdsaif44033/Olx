@@ -25,7 +25,7 @@ class UserController {
       "favourites": [],
       "uid": uid
     };
-// sssksksjksk//
+
     CollectionReference users = firestore.collection('Users');
     print('users $users');
     try {

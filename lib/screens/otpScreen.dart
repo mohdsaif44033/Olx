@@ -8,8 +8,7 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import '../controllers/authController.dart';
 
 class OtpScreen extends StatefulWidget {
-  final String phone;
-  const OtpScreen({super.key, required this.phone});
+  const OtpScreen({super.key});
 
   @override
   State<OtpScreen> createState() => _OtpScreenState();
@@ -20,6 +19,9 @@ class _OtpScreenState extends State<OtpScreen> {
 
   String countryDial = "+91";
   String phone = "";
+  String email= "";
+  String name = "";
+
   TextEditingController phoneController = TextEditingController();
 
   var auth = Get.put(AuthController());
@@ -29,11 +31,30 @@ class _OtpScreenState extends State<OtpScreen> {
         verificationId: verificationId, smsCode: otp);
     UserCredential usrCred =
         await FirebaseAuth.instance.signInWithCredential(credential);
+         var controller = Get.put(AuthController());
   }
-
+ getRegisterData(){
+  print('argument ${Get.arguments}');
+ name =  Get.arguments[0]["name"];
+ email =  Get.arguments[1]["email"];
+ phone =  Get.arguments[2]["phone"];
+ }
+ 
+ void onInitState(){
+  getRegisterData();
+ super.initState();
+ print("name:$name, email:$email,phone:$phone");}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar:AppBar(
+  leading: IconButton(
+    icon: Icon(Icons.arrow_back, color: Colors.black),
+    onPressed: () => Navigator.of(context).pop(),
+  ), 
+  title: Text("Sample"),
+  centerTitle: true,
+),
       body: SingleChildScrollView(
         child: Column(
           children: [

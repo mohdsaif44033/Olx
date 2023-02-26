@@ -3,6 +3,7 @@ import 'package:get/route_manager.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:olx/screens/loginPage.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:olx/screens/signUpWithPhone.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+      home: SignupWithPhone(),
     );
   }
 }

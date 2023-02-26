@@ -5,6 +5,7 @@ import 'package:olx/controllers/authController.dart';
 import 'package:olx/controllers/userController.dart';
 import 'package:olx/models/userModels.dart';
 import 'package:olx/screens/HomePage.dart';
+import 'package:olx/screens/phoneLogin.dart';
 import 'package:olx/screens/signupPage.dart';
 
 class LoginPage extends StatefulWidget {
@@ -171,7 +172,22 @@ class _LoginPageState extends State<LoginPage> {
                                                         const SignupPage()));
                                           },
                                           child: const Text('Not a User? Signup Here'),
-                                        ),
+                                        ),TextButton(
+                                          style: TextButton.styleFrom(
+                                            textStyle: const TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.cyan,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          onPressed: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const PhoneLogin()));
+                                          },
+                                          child: const Text('Login With Phone'),
+                                        )
                       ],
                     ),
                   )
