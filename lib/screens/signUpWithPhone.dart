@@ -97,7 +97,7 @@ class SignupWithPhoneState extends State<SignupWithPhone> {
                           child: InkWell(
                             onTap: () {
                               auth.verifyPhone(phoneController.text,
-                                  nameController.text, emailController.text);
+                                  nameController.text, emailController.text, "no");
                             },
                             child: AnimatedContainer(
                               duration: const Duration(seconds: 1),
