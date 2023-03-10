@@ -15,20 +15,6 @@ class PhoneLogin extends StatefulWidget {
 class _PhoneLoginState extends State<PhoneLogin> {
   var auth = Get.put(AuthController());
 
-  Future<void> verifyPhone(String number) async {
-    await FirebaseAuth.instance.verifyPhoneNumber(
-      phoneNumber: "+91$number",
-      timeout: const Duration(seconds: 60),
-      verificationCompleted: (PhoneAuthCredential credential) {},
-      verificationFailed: (FirebaseAuthException e) {},
-      codeSent: (String verificationId, int? resendToken) {
-        auth.verificationIdPhone.value = verificationId;
-       // Get.to(() => OtpScreen(phone: number));
-      },
-      codeAutoRetrievalTimeout: (String verificationId) {},
-    );
-  }
-
   TextEditingController phoneController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -90,8 +76,8 @@ class _PhoneLoginState extends State<PhoneLogin> {
                                         content:
                                             Text("Phone is still empty!")));
                               } else {
-                                verifyPhone(phoneController.text);
-                                // Navigator.push(context, MaterialPageRoute(builder: (context) => OtpScreen(phone : phoneController.text )));
+                                auth.verifyPhone(
+                                    phoneController.text, "", "", "yes");
                               }
                             },
                             child: Container(

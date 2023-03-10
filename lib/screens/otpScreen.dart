@@ -25,7 +25,8 @@ class _OtpScreenState extends State<OtpScreen> {
   String phone = "";
   String email = "";
   String name = "";
-  String verificatioId = "";
+  String verId = "";
+  String isFromLogin = "";
 
   TextEditingController phoneController = TextEditingController();
 
@@ -33,7 +34,7 @@ class _OtpScreenState extends State<OtpScreen> {
 
   signUpWithOTP(otp) async {
     PhoneAuthCredential credential = PhoneAuthProvider.credential(
-        verificationId: verificatioId, smsCode: otp);
+        verificationId: verId, smsCode: otp);
     UserCredential usrCred =
         await FirebaseAuth.instance.signInWithCredential(credential);
     UserController userController = UserController();
@@ -49,7 +50,7 @@ class _OtpScreenState extends State<OtpScreen> {
 
   loginWithOTP(otp) async {
     PhoneAuthCredential credential = PhoneAuthProvider.credential(
-        verificationId: verificatioId, smsCode: otp);
+        verificationId: verId, smsCode: otp);
     UserCredential usrCred =
         await FirebaseAuth.instance.signInWithCredential(credential);
     UserController userController = UserController();
@@ -62,7 +63,9 @@ class _OtpScreenState extends State<OtpScreen> {
     name = Get.arguments[0]["name"];
     email = Get.arguments[1]["email"];
     phone = Get.arguments[2]["phone"];
-    verificatioId = Get.arguments[3]['verificationId'];
+    verId = Get.arguments[3]['verificationId'];
+    isFromLogin = Get.arguments[4]["isFromLogin"];
+
   }
 
   void onInitState() {
@@ -171,14 +174,15 @@ class _OtpScreenState extends State<OtpScreen> {
                           borderRadius: BorderRadius.circular(8),
                           child: InkWell(
                             onTap: () {
-                              signUpWithOTP(otpPin);
+                            
+                              isFromLogin == "no" ? signUpWithOTP(otpPin): loginWithOTP(otpPin);
                             },
                             child: Container(
                               height: 50,
                               width: 150,
                               alignment: Alignment.center,
                               child: const Text(
-                                "Register",
+                                "Verify",
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,

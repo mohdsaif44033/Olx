@@ -46,7 +46,7 @@ class AuthController extends GetxController {
     }
   }
 
-  Future<void> sendOTP(String number, String name, String email) async {
+  Future<void> verifyPhone(String number, String name, String email, String isFromLogin) async {
     await FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: "+91$number",
       timeout: const Duration(seconds: 60),
@@ -57,7 +57,8 @@ class AuthController extends GetxController {
           {"name": name},
           {"email": email},
           {"phone": number},
-          {"verificationId": verificationId}
+          {"verificationId": verificationId},
+          {"isFromLogin": isFromLogin}
         ]);
       },
       codeAutoRetrievalTimeout: (String verificationId) {},
