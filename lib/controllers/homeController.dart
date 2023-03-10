@@ -15,7 +15,6 @@ class HomeController extends GetxController {
 
   getAd() async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
-
     CollectionReference ad = firestore.collection('Advertisement');
     QuerySnapshot advertisement = await ad.get();
     var advertisementJsonArray = advertisement.docs;

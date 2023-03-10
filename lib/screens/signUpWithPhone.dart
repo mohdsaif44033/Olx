@@ -96,7 +96,7 @@ class SignupWithPhoneState extends State<SignupWithPhone> {
                           color: Colors.cyan,
                           child: InkWell(
                             onTap: () {
-                              auth.verifyPhone(phoneController.text,
+                              auth.sendOTP(phoneController.text,
                                   nameController.text, emailController.text);
                             },
                             child: AnimatedContainer(

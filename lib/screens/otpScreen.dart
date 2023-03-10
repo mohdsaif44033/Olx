@@ -54,9 +54,7 @@ class _OtpScreenState extends State<OtpScreen> {
         await FirebaseAuth.instance.signInWithCredential(credential);
     UserController userController = UserController();
     UserModel user = userController.getUser(uid: usrCred.user!.uid);
-    if (user != null) {
-      hc.user.value = user;
-    }
+    hc.user.value = user;
   }
 
   getRegisterData() {
