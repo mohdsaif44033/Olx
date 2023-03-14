@@ -1,37 +1,37 @@
-class AdModel{
+class AdModel {
   DateTime? createdAt;
   List? createdBy;
   String? desc;
   String? details;
-  String? image;
+  List<String>? image;
   int? likes;
   List? location;
   int? price;
   String? title;
 
-  AdModel({
-    this.createdAt,
-    this.createdBy,
-    this.desc,
-    this.details,
-    this.image,
-    this.likes,
-    this.location,
-    this.price,
-    this.title
-  });
-  
+  AdModel(
+      {this.createdAt,
+      this.createdBy,
+      this.desc,
+      this.details,
+      this.image,
+      this.likes,
+      this.location,
+      this.price,
+      this.title});
+
   fromJson(Map<String, dynamic> json) {
     return AdModel(
-        createdAt: json['createdAt'],
-        createdBy: json['createdBy'],
-        desc: json['desc'],
-        details: json['details'],
-        image: json['image'],
-        likes: json['likes'],
-        location: json['location'],
-        price: json['price'],
-        title: json['title'],);
+      createdAt: json['createdAt'],
+      createdBy: json['createdBy'],
+      desc: json['desc'],
+      details: json['details'],
+      image: json['image'],
+      likes: json['likes'],
+      location: json['location'],
+      price: json['price'],
+      title: json['title'],
+    );
   }
 
   toJson() {
@@ -45,6 +45,6 @@ class AdModel{
       'location': location,
       'price': price,
       'title': title
-};
+    };
   }
 }

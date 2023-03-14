@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:olx/models/adModel.dart';
-import 'package:olx/models/userModels.dart';
 
 class HomeController extends GetxController {
   RxList<AdModel> adArray = <AdModel>[].obs;
@@ -12,6 +11,19 @@ class HomeController extends GetxController {
   }
 
   Rx<dynamic> user = null.obs;
+
+  createAd(AdModel adModel) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    CollectionReference ad = firestore.collection('Advertisement');
+
+    try {
+      ad.doc().set(adModel.toJson());
+      return true;
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
 
   getAd() async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;

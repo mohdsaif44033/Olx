@@ -33,8 +33,8 @@ class _OtpScreenState extends State<OtpScreen> {
   var auth = Get.put(AuthController());
 
   signUpWithOTP(otp) async {
-    PhoneAuthCredential credential = PhoneAuthProvider.credential(
-        verificationId: verId, smsCode: otp);
+    PhoneAuthCredential credential =
+        PhoneAuthProvider.credential(verificationId: verId, smsCode: otp);
     UserCredential usrCred =
         await FirebaseAuth.instance.signInWithCredential(credential);
     UserController userController = UserController();
@@ -49,8 +49,8 @@ class _OtpScreenState extends State<OtpScreen> {
   var hc = Get.put(HomeController());
 
   loginWithOTP(otp) async {
-    PhoneAuthCredential credential = PhoneAuthProvider.credential(
-        verificationId: verId, smsCode: otp);
+    PhoneAuthCredential credential =
+        PhoneAuthProvider.credential(verificationId: verId, smsCode: otp);
     UserCredential usrCred =
         await FirebaseAuth.instance.signInWithCredential(credential);
     UserController userController = UserController();
@@ -59,18 +59,20 @@ class _OtpScreenState extends State<OtpScreen> {
   }
 
   getRegisterData() {
-    print('argument ${Get.arguments}');
-    name = Get.arguments[0]["name"];
-    email = Get.arguments[1]["email"];
-    phone = Get.arguments[2]["phone"];
-    verId = Get.arguments[3]['verificationId'];
-    isFromLogin = Get.arguments[4]["isFromLogin"];
-
+    setState(() {
+      print('argument ${Get.arguments}');
+      name = Get.arguments[0]["name"];
+      email = Get.arguments[1]["email"];
+      phone = Get.arguments[2]["phone"];
+      verId = Get.arguments[3]['verificationId'];
+      isFromLogin = Get.arguments[4]["isFromLogin"];
+    });
   }
 
-  void onInitState() {
+  void initState() {
     getRegisterData();
-    print("name:$name, email:$email,phone:$phone");
+    print(
+        "name:$name, email:$email,phone:$phone, isFromLogin: $isFromLogin, VarifyID: $verId");
     super.initState();
   }
 
@@ -174,8 +176,9 @@ class _OtpScreenState extends State<OtpScreen> {
                           borderRadius: BorderRadius.circular(8),
                           child: InkWell(
                             onTap: () {
-                            
-                              isFromLogin == "no" ? signUpWithOTP(otpPin): loginWithOTP(otpPin);
+                              isFromLogin == "no"
+                                  ? signUpWithOTP(otpPin)
+                                  : loginWithOTP(otpPin);
                             },
                             child: Container(
                               height: 50,
