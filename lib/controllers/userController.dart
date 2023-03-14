@@ -42,6 +42,7 @@ class UserController {
 
     if (user.docs.isNotEmpty) {
       var userAsJson = user.docs.first;
+      print('user json ${userAsJson.get("phone")}');
 
       UserModel userModel = UserModel(
           email: userAsJson.get("email"),
@@ -49,7 +50,7 @@ class UserController {
           createdAt: (userAsJson.get("time") as Timestamp).toDate(),
           favouriteAd: userAsJson.get("favourites"),
           name: userAsJson.get("name"),
-          phone: userAsJson.get("phone"),
+          phone: userAsJson.get("phone")??'',
           totalAds: userAsJson.get("totalAds"));
       return userModel;
     }
