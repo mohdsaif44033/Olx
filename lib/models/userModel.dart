@@ -1,20 +1,20 @@
 class UserModel {
-  String email;
-  String uid;
-  String name;
-  String phone;
-  DateTime createdAt;
-  int totalAds;
-  List favouriteAd;
+  String? email;
+  String? uid;
+  String? name;
+  String? phone;
+  DateTime? createdAt;
+  int? totalAds;
+  List? favouriteAd;
 
   UserModel(
-      {required this.email,
-      required this.name,
-      required this.uid,
-      required this.favouriteAd,
-      required this.phone,
-      required this.totalAds,
-      required this.createdAt});
+    { this.email,
+       this.name,
+       this.uid,
+       this.favouriteAd,
+       this.phone,
+       this.totalAds,
+       this.createdAt});
 
   fromJson(Map<String, dynamic> json) {
     return UserModel(

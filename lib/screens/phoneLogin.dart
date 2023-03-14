@@ -34,11 +34,11 @@ class _PhoneLoginState extends State<PhoneLogin> {
                     height: 200,
                     width: MediaQuery.of(context).size.width,
                     alignment: Alignment.center,
-                    child: const CircleAvatar(
-                      backgroundImage: NetworkImage(
-                          "https://img.freepik.com/free-vector/cute-hippo-waving-hand-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated-premium_138676-4749.jpg?w=2000"),
-                      radius: 100.0,
-                    ),
+                    // child: const CircleAvatar(
+                    //   backgroundImage: NetworkImage(
+                    //       "https://img.freepik.com/free-vector/cute-hippo-waving-hand-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated-premium_138676-4749.jpg?w=2000"),
+                    //   radius: 100.0,
+                    // ),
                   ),
                   const SizedBox(height: 20),
                   Padding(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:olx/screens/HomePage.dart';
 import 'package:olx/screens/loginPage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:olx/screens/signUpWithPhone.dart';
@@ -17,9 +18,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const GetMaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SignupWithPhone(),
+      home: LoginPage(),
     );
   }
 }

@@ -47,6 +47,7 @@ class AuthController extends GetxController {
   }
 
   Future<void> verifyPhone(String number, String name, String email, String isFromLogin) async {
+
     await FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: "+91$number",
       timeout: const Duration(seconds: 60),

@@ -1,11 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:olx/controllers/homeController.dart';
 import 'package:olx/controllers/userController.dart';
 import 'package:olx/models/userModel.dart';
-import 'package:olx/screens/loginPage.dart';
 import 'package:olx/screens/phoneLogin.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
@@ -33,7 +31,10 @@ class _OtpScreenState extends State<OtpScreen> {
   var auth = Get.put(AuthController());
 
   signUpWithOTP(otp) async {
-    PhoneAuthCredential credential = PhoneAuthProvider.credential(
+    print('verification id $verId , otp $otp');
+
+    
+        PhoneAuthCredential credential = PhoneAuthProvider.credential(
         verificationId: verId, smsCode: otp);
     UserCredential usrCred =
         await FirebaseAuth.instance.signInWithCredential(credential);
@@ -54,10 +55,11 @@ class _OtpScreenState extends State<OtpScreen> {
     UserCredential usrCred =
         await FirebaseAuth.instance.signInWithCredential(credential);
     UserController userController = UserController();
-    UserModel user = userController.getUser(uid: usrCred.user!.uid);
-    if (user != null) {
-      hc.user.value = user;
-    }
+        print('user model ${usrCred.user}');
+
+    UserModel user = await userController.getUser(uid: usrCred.user!.uid);
+    print('user data $user');
+    hc.user.value = user;
   }
 
   getRegisterData() {
@@ -70,9 +72,10 @@ class _OtpScreenState extends State<OtpScreen> {
 
   }
 
-  void onInitState() {
+  @override
+  void initState() {
     getRegisterData();
-    print("name:$name, email:$email,phone:$phone");
+    print("name:$name, email:$email,phone:$phone , verid:$verId");
     super.initState();
   }
 
@@ -136,7 +139,9 @@ class _OtpScreenState extends State<OtpScreen> {
                         PinCodeTextField(
                           appContext: context,
                           length: 6,
-                          onChanged: (value) {},
+                          onChanged: (value) {
+                            otpPin = value;
+                          },
                           pinTheme: PinTheme(
                               activeColor: Colors.black,
                               selectedColor: Colors.blue,
